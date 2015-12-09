@@ -15,7 +15,11 @@
                      (.setMaxIdle 5)
                      (.setMaxWait 5000)
                      (.setMinIdle 1)
-                     (.setRemoveAbandoned true))]
+                     (.setRemoveAbandoned true)
+                     (.setRemoveAbandonedTimeout 30)
+                     (.setTestOnBorrow true)
+                     (.setValidationQuery "select 1")
+                     (.setValidationInterval 500000))]
     {:datasource datasource}))
 
 (def pool

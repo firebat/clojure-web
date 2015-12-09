@@ -1,5 +1,6 @@
 (ns app.handler
-  (:require [compojure.core :refer :all]
+  (:require [clojure.tools.logging :as log]
+            [compojure.core :refer :all]
             [compojure.route :as route]
             [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
             [ring.middleware.defaults :refer [wrap-defaults api-defaults]]
@@ -15,8 +16,14 @@
              :message message}))
 
 (defroutes api-routes
-  (GET "/" {params :params body :body}
-       (json-response params))
+
+  (GET "/user/:name" [name]
+       (json-response {:name  name}))
+
+  (POST "/user/:name" {params :params body :body session :session}
+        (log/info "name" (:name params))
+        (log/info "data" body)
+        (json-response params))
 
   (GET "/ex" []
        (assert (= 1 2)))
@@ -25,11 +32,18 @@
        (json-response
         (jdbc/query
          (connection)
-         ["select ? as name" "alice"]))))
+         ["select ? as name, ? as age" "alice" 20]
+         ;; [optional] list => entity
+         :result-set-fn first
+         ;; [optional] format entity
+         :row-fn (fn [x] (assoc x :text (str (:name x) " already " (:age x) " years old.")))
+         ))))
 
 
 (defroutes app-routes
+
   (GET "/" [] "Hello World")
+  (GET "/request" request (str request))
 
   (context "/api/v1" request api-routes)
   (route/resources "/")
@@ -48,8 +62,10 @@
       (if true
         ;; authorized
         (try
+          (log/debug "request from" (:remote-addr request) "to" (get-in request [:headers "host"]))
           (handler request)
           (catch Throwable e
+            (log/error e)
             (-> (response {:status -1 :message (.getMessage e) :data nil}))))
         
         ;; login
