@@ -21,6 +21,11 @@ To start a web server for the application, run:
 
     lein ring server [port]
 
+## Optional
+
+- [cronj](https://github.com/zcaudate/cronj), A simple to use, cron-inspired task scheduler
+- [postal](https://github.com/drewr/postal) Internet email library for Clojure
+
 ## License
 
 Copyright © 2015 FIXME
