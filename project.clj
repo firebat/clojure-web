@@ -16,6 +16,7 @@
                  [compojure "1.4.0"]
                  [org.apache.tomcat/tomcat-jdbc "8.0.28"]
                  [clj-http "2.0.0"]
+                 [im.chit/cronj "1.4.1"]
                  [org.postgresql/postgresql "9.4-1205-jdbc41"]
                  [org.xerial/sqlite-jdbc "3.7.2"]]
   :plugins [[lein-ring "0.9.7"]]

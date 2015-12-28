@@ -8,7 +8,8 @@
             [ring.middleware.session :refer [wrap-session]]
             [ring.util.response :refer [response resource-response redirect]]
             [clojure.java.jdbc :as jdbc]
-            [app.db :refer [connection]]))
+            [app.db :refer [connection]]
+            [app.job :as job]))
 
 (defn json-response [data & {:keys [status message] :or {status 0 message ""}}]
   (response {:data data
@@ -44,6 +45,10 @@
 
   (GET "/" [] "Hello World")
   (GET "/request" request (str request))
+
+  (GET "/check" []
+       (app.job/start-all)
+       "OK")
 
   (context "/api/v1" request api-routes)
   (route/resources "/")
