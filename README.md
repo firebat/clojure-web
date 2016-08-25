@@ -17,14 +17,14 @@ You will need [Leiningen][] 2.0.0 or above installed.
 
 ### Profiles
 
-   cat ~/.lein/profiles.clj
-   {:user {:plugins [[cider/cider-nrepl "0.13.0"]] 
-           :mirrors {"central" {:name "...Nexus"
-                                :url "http://.../nexus/content/groups/public/"}}
-           :deploy-repositories {"snapshots" {:url "http://.../nexus/content/repositories/snapshots/"
-                                              :username "..."
-                                              :password "..."}}}
-    :repl {:dependencies [[org.clojure/tools.nrepl "0.2.12"]]}}
+    cat ~/.lein/profiles.clj
+    {:user {:plugins [[cider/cider-nrepl "0.13.0"]] 
+            :mirrors {"central" {:name "...Nexus"
+                                 :url "http://.../nexus/content/groups/public/"}}
+            :deploy-repositories {"snapshots" {:url "http://.../nexus/content/repositories/snapshots/"
+                                               :username "..."
+                                               :password "..."}}}
+     :repl {:dependencies [[org.clojure/tools.nrepl "0.2.12"]]}}
                                                                                                                                     
 
 - mirrors use 'lein deps` download packages
